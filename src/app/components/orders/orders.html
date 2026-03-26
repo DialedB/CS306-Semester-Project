@@ -1,0 +1,152 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0">Orders</h4>
+    <button class="btn btn-primary btn-sm" (click)="openCreate()">+ New Order</button>
+  </div>
+
+  @if (successMsg) {
+    <div class="alert alert-success alert-dismissible">
+      {{ successMsg }}<button type="button" class="btn-close" (click)="successMsg=''"></button>
+    </div>
+  }
+  @if (errorMsg) {
+    <div class="alert alert-danger alert-dismissible">
+      {{ errorMsg }}<button type="button" class="btn-close" (click)="errorMsg=''"></button>
+    </div>
+  }
+
+  @if (showForm) {
+    <div class="card mb-4">
+      <div class="card-header">New Order</div>
+      <div class="card-body">
+        <div class="mb-3">
+          <label class="form-label">Customer</label>
+          <select class="form-select" [(ngModel)]="selectedCustomerId"
+                  [class.is-invalid]="formValidated && !selectedCustomerId">
+            <option value="">-- Select customer --</option>
+            @for (c of customers; track c.id) {
+              <option [value]="c.id">{{ c.name }} — {{ c.email }}</option>
+            }
+          </select>
+        </div>
+
+        <label class="form-label">Items</label>
+        @for (line of orderItems; track $index; let i = $index) {
+          <div class="row g-2 mb-2 align-items-center">
+            <div class="col-md-6">
+              <select class="form-select form-select-sm" [(ngModel)]="line.menuItemId" [name]="'item'+i">
+                <option value="">-- Select item --</option>
+                @for (mi of menuItems; track mi.id) {
+                  <option [value]="mi.id">{{ mi.name }} — ${{ mi.price | number:'1.2-2' }}</option>
+                }
+              </select>
+            </div>
+            <div class="col-md-2">
+              <input type="number" class="form-control form-control-sm" [(ngModel)]="line.qty"
+                     [name]="'qty'+i" min="1" placeholder="Qty">
+            </div>
+            <div class="col-md-2 text-muted small">
+              @if (line.menuItemId && line.qty > 0) {
+                ${{ (getMenuItemById(line.menuItemId)?.price ?? 0) * line.qty | number:'1.2-2' }}
+              }
+            </div>
+            <div class="col-md-2">
+              @if (orderItems.length > 1) {
+                <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeOrderItem(i)">Remove</button>
+              }
+            </div>
+          </div>
+        }
+        <button type="button" class="btn btn-sm btn-outline-secondary mb-3" (click)="addOrderItem()">
+          + Add item
+        </button>
+
+        <div class="mb-3">
+          <strong>Total: ${{ calcFormTotal() | number:'1.2-2' }}</strong>
+        </div>
+
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary btn-sm" (click)="saveOrder()" [disabled]="saving">
+            @if (saving) { <span class="spinner-border spinner-border-sm me-1"></span> }
+            Place Order
+          </button>
+          <button class="btn btn-secondary btn-sm" (click)="cancelForm()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <div class="row g-2 mb-3">
+    <div class="col-md-4">
+      <input type="text" class="form-control form-control-sm" placeholder="Search by customer..."
+             [(ngModel)]="searchTerm" (ngModelChange)="applyFilter()">
+    </div>
+    <div class="col-md-3">
+      <select class="form-select form-select-sm" [(ngModel)]="filterStatus" (ngModelChange)="applyFilter()">
+        <option value="">All statuses</option>
+        @for (s of statuses; track s) {
+          <option [value]="s">{{ s | titlecase }}</option>
+        }
+      </select>
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-outline-secondary btn-sm" (click)="sortAsc=!sortAsc; applyFilter()">
+        {{ sortAsc ? 'Oldest first' : 'Newest first' }}
+      </button>
+    </div>
+    <div class="col-md-2 text-muted small d-flex align-items-center">
+      {{ filteredOrders.length }} order(s)
+    </div>
+  </div>
+
+  @if (loading) {
+    <div class="text-center py-5"><div class="spinner-border" role="status"></div></div>
+  } @else if (filteredOrders.length === 0) {
+    <p class="text-muted text-center py-4">No orders found.</p>
+  } @else {
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Customer</th>
+              <th>Items</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (order of filteredOrders; track order.id) {
+              <tr>
+                <td>{{ order.customerName }}</td>
+                <td>
+                  <ul class="list-unstyled mb-0 small text-muted">
+                    @for (item of order.items; track item.menuItemId) {
+                      <li>{{ item.quantity }}× {{ item.menuItemName }}</li>
+                    }
+                  </ul>
+                </td>
+                <td>${{ order.totalAmount | number:'1.2-2' }}</td>
+                <td>
+                  <select class="form-select form-select-sm" style="min-width:110px"
+                          [value]="order.status"
+                          (change)="updateStatus(order, $any($event.target).value)">
+                    @for (s of statuses; track s) {
+                      <option [value]="s" [selected]="order.status === s">{{ s | titlecase }}</option>
+                    }
+                  </select>
+                </td>
+                <td class="text-muted small">{{ order.createdAt | date:'short' }}</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-danger" (click)="deleteOrder(order)">Delete</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+</div>

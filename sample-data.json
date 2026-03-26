@@ -1,0 +1,94 @@
+{
+  "menuItems": {
+    "item1": { "name": "Margherita Pizza",    "category": "Main Course", "price": 12.99, "description": "Classic tomato sauce, mozzarella, fresh basil.",          "available": true,  "orderCount": 24 },
+    "item2": { "name": "Pepperoni Pizza",     "category": "Main Course", "price": 14.99, "description": "Tomato sauce, mozzarella, spicy pepperoni slices.",        "available": true,  "orderCount": 31 },
+    "item3": { "name": "Caesar Salad",        "category": "Starters",    "price": 8.50,  "description": "Romaine lettuce, croutons, parmesan, Caesar dressing.",    "available": true,  "orderCount": 18 },
+    "item4": { "name": "Garlic Bread",        "category": "Sides",       "price": 4.50,  "description": "Toasted baguette with garlic butter and herbs.",            "available": true,  "orderCount": 27 },
+    "item5": { "name": "BBQ Chicken Burger",  "category": "Main Course", "price": 13.50, "description": "Grilled chicken, BBQ sauce, coleslaw, brioche bun.",        "available": true,  "orderCount": 15 },
+    "item6": { "name": "Onion Rings",         "category": "Sides",       "price": 5.00,  "description": "Crispy beer-battered onion rings with dipping sauce.",      "available": true,  "orderCount": 11 },
+    "item7": { "name": "Tiramisu",            "category": "Desserts",    "price": 6.99,  "description": "Classic Italian espresso dessert with mascarpone cream.",   "available": true,  "orderCount": 14 },
+    "item8": { "name": "Chocolate Lava Cake", "category": "Desserts",    "price": 7.50,  "description": "Warm chocolate cake with a molten center, served with ice cream.", "available": true, "orderCount": 9 },
+    "item9": { "name": "Sparkling Water",     "category": "Drinks",      "price": 2.50,  "description": "500ml chilled sparkling mineral water.",                   "available": true,  "orderCount": 35 },
+    "item10":{ "name": "Craft Lemonade",      "category": "Drinks",      "price": 3.99,  "description": "Freshly squeezed lemonade with mint and ice.",             "available": true,  "orderCount": 22 },
+    "item11":{ "name": "Bruschetta",          "category": "Starters",    "price": 7.00,  "description": "Toasted bread topped with diced tomatoes, garlic, and basil.", "available": true, "orderCount": 16 },
+    "item12":{ "name": "Mushroom Risotto",    "category": "Main Course", "price": 15.00, "description": "Creamy Arborio rice with wild mushrooms and parmesan.",    "available": false, "orderCount": 8  }
+  },
+
+  "customers": {
+    "cust1": { "name": "Alice Papadopoulos", "email": "alice@example.com",  "phone": "+30 210 555 0101", "totalSpent": 187.45, "orderCount": 12 },
+    "cust2": { "name": "Bob Stavros",        "email": "bob@example.com",    "phone": "+30 210 555 0202", "totalSpent": 95.00,  "orderCount": 6  },
+    "cust3": { "name": "Clara Nikos",        "email": "clara@example.com",  "phone": "+30 210 555 0303", "totalSpent": 230.80, "orderCount": 15 },
+    "cust4": { "name": "Dimitris Kostas",    "email": "dimitris@example.com","phone": "+30 210 555 0404", "totalSpent": 42.50,  "orderCount": 3  },
+    "cust5": { "name": "Elena Georgiou",     "email": "elena@example.com",  "phone": "+30 210 555 0505", "totalSpent": 310.20, "orderCount": 20 },
+    "cust6": { "name": "Fotis Alexiou",      "email": "fotis@example.com",  "phone": "+30 210 555 0606", "totalSpent": 67.99,  "orderCount": 4  }
+  },
+
+  "orders": {
+    "order1": {
+      "customerId": "cust5", "customerName": "Elena Georgiou",
+      "items": [
+        { "menuItemId": "item2", "menuItemName": "Pepperoni Pizza",  "price": 14.99, "quantity": 2 },
+        { "menuItemId": "item9", "menuItemName": "Sparkling Water",  "price": 2.50,  "quantity": 2 }
+      ],
+      "totalAmount": 34.98, "status": "delivered", "createdAt": "2026-03-18T12:30:00.000Z"
+    },
+    "order2": {
+      "customerId": "cust1", "customerName": "Alice Papadopoulos",
+      "items": [
+        { "menuItemId": "item1", "menuItemName": "Margherita Pizza", "price": 12.99, "quantity": 1 },
+        { "menuItemId": "item3", "menuItemName": "Caesar Salad",     "price": 8.50,  "quantity": 1 },
+        { "menuItemId": "item4", "menuItemName": "Garlic Bread",     "price": 4.50,  "quantity": 1 }
+      ],
+      "totalAmount": 25.99, "status": "delivered", "createdAt": "2026-03-19T13:00:00.000Z"
+    },
+    "order3": {
+      "customerId": "cust3", "customerName": "Clara Nikos",
+      "items": [
+        { "menuItemId": "item5", "menuItemName": "BBQ Chicken Burger","price": 13.50, "quantity": 2 },
+        { "menuItemId": "item6", "menuItemName": "Onion Rings",       "price": 5.00,  "quantity": 1 },
+        { "menuItemId": "item10","menuItemName": "Craft Lemonade",    "price": 3.99,  "quantity": 2 }
+      ],
+      "totalAmount": 39.98, "status": "delivered", "createdAt": "2026-03-20T19:15:00.000Z"
+    },
+    "order4": {
+      "customerId": "cust2", "customerName": "Bob Stavros",
+      "items": [
+        { "menuItemId": "item11","menuItemName": "Bruschetta",        "price": 7.00,  "quantity": 2 },
+        { "menuItemId": "item7", "menuItemName": "Tiramisu",          "price": 6.99,  "quantity": 1 }
+      ],
+      "totalAmount": 20.99, "status": "delivered", "createdAt": "2026-03-21T20:00:00.000Z"
+    },
+    "order5": {
+      "customerId": "cust5", "customerName": "Elena Georgiou",
+      "items": [
+        { "menuItemId": "item2", "menuItemName": "Pepperoni Pizza",   "price": 14.99, "quantity": 1 },
+        { "menuItemId": "item8", "menuItemName": "Chocolate Lava Cake","price": 7.50, "quantity": 2 }
+      ],
+      "totalAmount": 29.99, "status": "ready", "createdAt": "2026-03-24T18:45:00.000Z"
+    },
+    "order6": {
+      "customerId": "cust4", "customerName": "Dimitris Kostas",
+      "items": [
+        { "menuItemId": "item4", "menuItemName": "Garlic Bread",      "price": 4.50,  "quantity": 2 },
+        { "menuItemId": "item9", "menuItemName": "Sparkling Water",   "price": 2.50,  "quantity": 1 }
+      ],
+      "totalAmount": 11.50, "status": "preparing", "createdAt": "2026-03-25T11:00:00.000Z"
+    },
+    "order7": {
+      "customerId": "cust6", "customerName": "Fotis Alexiou",
+      "items": [
+        { "menuItemId": "item1", "menuItemName": "Margherita Pizza",  "price": 12.99, "quantity": 1 },
+        { "menuItemId": "item3", "menuItemName": "Caesar Salad",      "price": 8.50,  "quantity": 1 }
+      ],
+      "totalAmount": 21.49, "status": "pending", "createdAt": "2026-03-25T12:10:00.000Z"
+    },
+    "order8": {
+      "customerId": "cust3", "customerName": "Clara Nikos",
+      "items": [
+        { "menuItemId": "item2", "menuItemName": "Pepperoni Pizza",   "price": 14.99, "quantity": 3 },
+        { "menuItemId": "item10","menuItemName": "Craft Lemonade",    "price": 3.99,  "quantity": 3 }
+      ],
+      "totalAmount": 56.94, "status": "delivered", "createdAt": "2026-03-22T14:30:00.000Z"
+    }
+  }
+}

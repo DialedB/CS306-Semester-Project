@@ -1,0 +1,130 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0">Menu Items</h4>
+    <button class="btn btn-primary btn-sm" (click)="openCreate()">+ Add Item</button>
+  </div>
+
+  @if (successMsg) {
+    <div class="alert alert-success alert-dismissible">
+      {{ successMsg }}<button type="button" class="btn-close" (click)="successMsg=''"></button>
+    </div>
+  }
+  @if (errorMsg) {
+    <div class="alert alert-danger alert-dismissible">
+      {{ errorMsg }}<button type="button" class="btn-close" (click)="errorMsg=''"></button>
+    </div>
+  }
+
+  @if (showForm) {
+    <div class="card mb-4">
+      <div class="card-header">{{ editingId ? 'Edit Item' : 'New Item' }}</div>
+      <div class="card-body">
+        <form #menuForm="ngForm" [class.was-validated]="formValidated" novalidate
+              (ngSubmit)="saveItem(menuForm)">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Name</label>
+              <input type="text" class="form-control" [(ngModel)]="form.name" name="name"
+                     required minlength="2">
+              <div class="invalid-feedback">Name is required.</div>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Category</label>
+              <select class="form-select" [(ngModel)]="form.category" name="category" required>
+                <option value="">-- Select --</option>
+                @for (cat of categories; track cat) {
+                  <option [value]="cat">{{ cat }}</option>
+                }
+              </select>
+              <div class="invalid-feedback">Required.</div>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Price ($)</label>
+              <input type="number" class="form-control" [(ngModel)]="form.price" name="price"
+                     required min="0.01" step="0.01">
+              <div class="invalid-feedback">Must be > 0.</div>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Description</label>
+              <textarea class="form-control" [(ngModel)]="form.description" name="description"
+                        required rows="2"></textarea>
+              <div class="invalid-feedback">Required.</div>
+            </div>
+            <div class="col-12">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" [(ngModel)]="form.available"
+                       name="available" id="availableCheck">
+                <label class="form-check-label" for="availableCheck">Available on menu</label>
+              </div>
+            </div>
+          </div>
+          <div class="mt-3 d-flex gap-2">
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="saving">
+              @if (saving) { <span class="spinner-border spinner-border-sm me-1"></span> }
+              {{ editingId ? 'Update' : 'Save' }}
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" (click)="cancelForm()">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+
+  <div class="row g-2 mb-3">
+    <div class="col-md-5">
+      <input type="text" class="form-control form-control-sm" placeholder="Search..."
+             [(ngModel)]="searchTerm" (ngModelChange)="applyFilter()">
+    </div>
+    <div class="col-md-3">
+      <select class="form-select form-select-sm" [(ngModel)]="filterCategory" (ngModelChange)="applyFilter()">
+        <option value="">All categories</option>
+        @for (cat of categories; track cat) {
+          <option [value]="cat">{{ cat }}</option>
+        }
+      </select>
+    </div>
+    <div class="col-md-4 text-muted small d-flex align-items-center">
+      {{ filteredItems.length }} item(s)
+    </div>
+  </div>
+
+  @if (loading) {
+    <div class="text-center py-5"><div class="spinner-border" role="status"></div></div>
+  } @else if (filteredItems.length === 0) {
+    <p class="text-muted text-center py-4">No items found.</p>
+  } @else {
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th style="cursor:pointer" (click)="toggleSort('name')">Name</th>
+              <th style="cursor:pointer" (click)="toggleSort('category')">Category</th>
+              <th style="cursor:pointer" (click)="toggleSort('price')">Price</th>
+              <th>Description</th>
+              <th>Available</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of filteredItems; track item.id) {
+              <tr>
+                <td>{{ item.name }}</td>
+                <td><span class="badge bg-secondary">{{ item.category }}</span></td>
+                <td>${{ item.price | number:'1.2-2' }}</td>
+                <td class="text-muted" style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap">
+                  {{ item.description }}
+                </td>
+                <td>{{ item.available ? 'Yes' : 'No' }}</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-secondary me-1" (click)="openEdit(item)">Edit</button>
+                  <button class="btn btn-sm btn-outline-danger" (click)="deleteItem(item)">Delete</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+</div>
