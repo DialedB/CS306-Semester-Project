@@ -44,8 +44,6 @@ export class MenuItems implements OnInit {
     });
   }
 
-
-
   applyFilter(): void {
     let result = [...this.items];
     if (this.searchTerm.trim()) {

@@ -18,7 +18,6 @@ Chart.register(...registerables);
   styleUrl: './analytics.css',
 })
 export class Analytics implements OnInit, AfterViewInit {
-  // Canvas elements are always in the DOM (not inside @if), so ViewChild is stable
   @ViewChild('popularChart') popularChartRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('revenueChart') revenueChartRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('statusChart') statusChartRef!: ElementRef<HTMLCanvasElement>;

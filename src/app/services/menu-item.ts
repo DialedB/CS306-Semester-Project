@@ -13,10 +13,6 @@ export class MenuItemService {
     return this.fb.getListObservable<MenuItem>(PATH);
   }
 
-  getOne(id: string): Promise<MenuItem> {
-    return this.fb.getOne(PATH, id);
-  }
-
   create(item: Omit<MenuItem, 'id'>): Promise<string> {
     return this.fb.create(PATH, item);
   }
@@ -29,7 +25,6 @@ export class MenuItemService {
     return this.fb.delete(PATH, id);
   }
 
-  // Increment order count for analytics tracking
   async incrementOrderCount(id: string, currentCount: number): Promise<void> {
     return this.fb.update(PATH, id, { orderCount: currentCount + 1 });
   }

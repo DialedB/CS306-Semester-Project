@@ -40,8 +40,6 @@ export class Customers implements OnInit {
     });
   }
 
-
-
   applyFilter(): void {
     let result = [...this.customers];
     if (this.searchTerm.trim()) {

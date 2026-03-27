@@ -14,7 +14,6 @@ import {
 } from 'firebase/database';
 import { Observable } from 'rxjs';
 
-// TODO: Replace with your Firebase project config from the Firebase Console
 const firebaseConfig = {
     apiKey: "AIzaSyCaBod_-tGxwNiFnlzG3gHQmewzmbadUhs",
   databaseURL: "https://semester-project-cs306-default-rtdb.europe-west1.firebasedatabase.app/",
@@ -30,7 +29,6 @@ export class FirebaseService {
     this.db = getDatabase(this.app);
   }
 
-  // Create — pushes a new record and returns the generated key
   async create(path: string, data: object): Promise<string> {
     const listRef = ref(this.db, path);
     const newRef = push(listRef);
@@ -38,15 +36,6 @@ export class FirebaseService {
     return newRef.key!;
   }
 
-  // Read all records at a path (one-shot fetch)
-  async getAll<T = any>(path: string): Promise<(T & { id: string })[]> {
-    const snapshot = await get(ref(this.db, path));
-    if (!snapshot.exists()) return [];
-    const raw = snapshot.val();
-    return Object.keys(raw).map((id) => ({ id, ...raw[id] })) as any[];
-  }
-
-  // Read all records at a path in real-time
   getListObservable<T = any>(path: string): Observable<(T & { id: string })[]> {
     return new Observable((observer) => {
       const listRef = ref(this.db, path);
@@ -63,24 +52,20 @@ export class FirebaseService {
         },
         (error) => observer.error(error)
       );
-      // Return teardown logic to unsubscribe when the observable is unsubscribed
       return () => unsubscribe();
     });
   }
 
-  // Read one record by id
   async getOne(path: string, id: string): Promise<any> {
     const snapshot = await get(child(ref(this.db), `${path}/${id}`));
     if (!snapshot.exists()) return null;
     return { id, ...snapshot.val() };
   }
 
-  // Update (partial merge)
   async update(path: string, id: string, data: object): Promise<void> {
     await update(ref(this.db, `${path}/${id}`), data);
   }
 
-  // Delete
   async delete(path: string, id: string): Promise<void> {
     await remove(ref(this.db, `${path}/${id}`));
   }

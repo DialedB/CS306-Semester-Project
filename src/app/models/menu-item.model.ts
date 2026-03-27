@@ -5,5 +5,5 @@ export interface MenuItem {
   price: number;
   description: string;
   available: boolean;
-  orderCount?: number; // tracked for analytics
+  orderCount?: number;
 }

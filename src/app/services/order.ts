@@ -13,10 +13,6 @@ export class OrderService {
     return this.fb.getListObservable<Order>(PATH);
   }
 
-  getOne(id: string): Promise<Order> {
-    return this.fb.getOne(PATH, id);
-  }
-
   create(order: Omit<Order, 'id'>): Promise<string> {
     return this.fb.create(PATH, order);
   }

@@ -13,10 +13,6 @@ export class CustomerService {
     return this.fb.getListObservable<Customer>(PATH);
   }
 
-  getOne(id: string): Promise<Customer> {
-    return this.fb.getOne(PATH, id);
-  }
-
   create(customer: Omit<Customer, 'id'>): Promise<string> {
     return this.fb.create(PATH, customer);
   }
@@ -29,7 +25,6 @@ export class CustomerService {
     return this.fb.delete(PATH, id);
   }
 
-  // Update spending totals after an order is placed
   async addOrderStats(id: string, amount: number, currentSpent: number, currentCount: number): Promise<void> {
     return this.fb.update(PATH, id, {
       totalSpent: +(currentSpent + amount).toFixed(2),
