@@ -43,7 +43,7 @@ A full-stack, single-page web application for managing a restaurant's daily oper
 
 ### Customers
 ![Customers](docs/screenshots/customers.png)
-*Customer management with top-spender highlighting (gold badge for top 25%).*
+*Customer management*
 
 ### Analytics
 ![Analytics](docs/screenshots/analytics.png)
