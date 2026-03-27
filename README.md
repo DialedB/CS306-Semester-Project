@@ -1,8 +1,8 @@
 # Restaurant Manager
 
-> CSC306 Advanced Web Development — Spring 2026
+> CSC306 Advanced Web Development - Spring 2026
 
-A full-stack, single-page web application for managing a restaurant's daily operations — menu catalogue, live order tracking, customer records, and a Chart.js analytics dashboard — built with **Angular 21**, **Firebase Realtime Database**, **Bootstrap 5**, and **Chart.js 4**.
+A full-stack, single-page web application for managing a restaurant's daily operations - menu catalogue, live order tracking, customer records, and a Chart.js analytics dashboard - built with **Angular 21**, **Firebase Realtime Database**, **Bootstrap 5**, and **Chart.js 4**.
 
 ---
 
@@ -55,7 +55,7 @@ A full-stack, single-page web application for managing a restaurant's daily oper
 
 | Module | Capability |
 |---|---|
-| **Dashboard** | Real-time aggregated stats — item count, order count, total customers, revenue from delivered orders, last 5 orders, top 3 spenders |
+| **Dashboard** | Real-time aggregated stats - item count, order count, total customers, revenue from delivered orders, last 5 orders, top 3 spenders |
 | **Menu Items** | Create / edit / delete items; search by name or description; filter by category; sort by name, category, or price |
 | **Orders** | Create orders by selecting a customer and any number of menu items with quantities; in-line status updates (`pending → preparing → ready → delivered / cancelled`); delete orders |
 | **Customers** | Full CRUD; search by name, email, or phone; sort by name, order count, or total spent; top-25%-spender gold highlight |
@@ -146,7 +146,7 @@ All list views subscribe to **real-time observables** (`onValue`) so the UI upda
 
 - **Node.js** 18 or later
 - **npm** 9 or later
-- **Angular CLI** — `npm install -g @angular/cli`
+- **Angular CLI** - `npm install -g @angular/cli`
 
 ### Installation
 
@@ -211,10 +211,10 @@ src/
 
 The Analytics page goes beyond basic CRUD to provide actionable business insights:
 
-- **Most Popular Items** — bar chart of the top 8 menu items ranked by `orderCount`, with the #1 item highlighted in gold.
-- **7-Day Revenue Trend** — line chart showing delivered-order revenue for each of the last 7 calendar days.
-- **Order Status Breakdown** — doughnut chart showing the distribution of all orders across the five statuses.
-- **Top Customers Table** — top 5 customers ranked by total spend; the #1 customer is highlighted in gold.
+- **Most Popular Items** - bar chart of the top 8 menu items ranked by `orderCount`, with the #1 item highlighted in gold.
+- **7-Day Revenue Trend** - line chart showing delivered-order revenue for each of the last 7 calendar days.
+- **Order Status Breakdown** - doughnut chart showing the distribution of all orders across the five statuses.
+- **Top Customers Table** - top 5 customers ranked by total spend; the #1 customer is highlighted in gold.
 
 The `orderCount` on each `MenuItem` and the `totalSpent` / `orderCount` on each `Customer` are updated atomically every time a new order is placed, keeping analytics data consistent without any background jobs.
 
@@ -224,4 +224,4 @@ In the **Customers** view, any customer who falls in the **top 25% by total spen
 
 ---
 
-*Built by Dusan Boljevic — CSC306 Advanced Web Development, Spring 2026*
+*Built by Dusan Boljevic - CSC306 Advanced Web Development, Spring 2026*
